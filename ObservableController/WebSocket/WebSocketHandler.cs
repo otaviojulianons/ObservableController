@@ -8,11 +8,11 @@ namespace ObservableController.WebSockets
 {
     public class WebSocketHandler
     {
-        private WebSocketCollection _manager;
+        private WebSocketManager _manager;
         private WebSocket _webSocket;
         private WebSocketKey _id;
 
-        public WebSocketHandler(WebSocketCollection manager, WebSocket webSocket,string channel)
+        public WebSocketHandler(WebSocketManager manager, WebSocket webSocket,string channel)
         {
             _manager = manager;
             _webSocket = webSocket;
@@ -21,7 +21,7 @@ namespace ObservableController.WebSockets
 
         public async Task Invoke<TDataObject>(HttpContext context,List<TDataObject> initialData)
         {
-            await _manager.Add(this);
+            await _manager.AddWebSocketHandler(this);
             await _webSocket.SendData(initialData);
 
             var data = await _webSocket.ReceiveData();

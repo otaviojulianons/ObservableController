@@ -8,31 +8,31 @@ using System.Threading.Tasks;
 
 namespace ObservableController.WebSockets
 {
-    public class WebSocketCollection
+    public class WebSocketManager
     {
-        public ConcurrentDictionary<WebSocketKey, WebSocket> _sockets;
-        public Dictionary<string,Type> RoutesInscription { get; set; }
+        public ConcurrentDictionary<WebSocketKey, WebSocket> WebSockets { get; private set; }
+        public Dictionary<string,Type> Channels { get; private set; }
 
-        public WebSocketCollection()
+        public WebSocketManager()
         {
-            _sockets = new ConcurrentDictionary<WebSocketKey, WebSocket> ();
-            RoutesInscription = new Dictionary<string, Type>();
+            WebSockets = new ConcurrentDictionary<WebSocketKey, WebSocket> ();
+            Channels = new Dictionary<string, Type>();
         }
 
-        public async Task Add(WebSocketHandler socket)
+        public async Task AddWebSocketHandler(WebSocketHandler socket)
         {
-            _sockets.TryAdd(socket.GetId(),socket.GetWebSocket());
+            WebSockets.TryAdd(socket.GetId(),socket.GetWebSocket());
         }
 
         public List<WebSocket> GetAll(string channel)
         {
-            return _sockets.Where( x => x.Key.Channel == channel).Select(x => x.Value).ToList();
+            return WebSockets.Where( x => x.Key.Channel == channel).Select(x => x.Value).ToList();
         }
 
         public async Task Remove(WebSocketKey id)
         {
             WebSocket socket;
-            _sockets.TryRemove(id, out socket);
+            WebSockets.TryRemove(id, out socket);
 
             await socket.CloseAsync(closeStatus: WebSocketCloseStatus.NormalClosure,
                                     statusDescription: "Closed by the WebSocketCollection",

@@ -17,9 +17,7 @@ namespace ObservableController.WebSockets
             {
                 var bytes = Encoding.UTF8.GetBytes(json);
                 await webSocket.SendAsync(new ArraySegment<byte>(bytes, 0, bytes.Length ), WebSocketMessageType.Text, true, CancellationToken.None);
-            }
-
-               
+            }   
         }
 
         public static async Task<(WebSocketReceiveResult result,byte[] buffer)> ReceiveData(this WebSocket webSocket)
@@ -34,7 +32,7 @@ namespace ObservableController.WebSockets
             return Encoding.UTF8.GetString(data.buffer, 0, data.result.Count);
         }
 
-        public static async Task SendAll(this WebSocketCollection webSocketManager,string channel, object data)
+        public static async Task SendAll(this WebSocketManager webSocketManager,string channel, object data)
         {
             foreach (var webSocket in webSocketManager.GetAll(channel))
                 await webSocket.SendData(data);

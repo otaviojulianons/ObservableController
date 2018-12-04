@@ -16,7 +16,7 @@ namespace ObservableController
 
         public static IServiceCollection UseObservablesControllers(this IServiceCollection services)
         {
-            services.AddSingleton<WebSocketCollection>();
+            services.AddSingleton<WebSocketManager>();
             return services;
         }
 
@@ -32,17 +32,17 @@ namespace ObservableController
 
             app.Use(async (context, next) =>
             {
-                WebSocketCollection webSocketContainer = (WebSocketCollection)context.RequestServices.GetService(typeof(WebSocketCollection));
+                WebSocketManager webSocketManager = (WebSocketManager)context.RequestServices.GetService(typeof(WebSocketManager));
 
-                if (webSocketContainer.RoutesInscription.ContainsKey(context.Request.Path))
+                if (webSocketManager.Channels.ContainsKey(context.Request.Path))
                 {
-                    var type = webSocketContainer.RoutesInscription[context.Request.Path];
+                    var type = webSocketManager.Channels[context.Request.Path];
                     dynamic controllerWebSocket = context.RequestServices.GetService(type);
                     var initialData = controllerWebSocket.GetData();
                     if (context.WebSockets.IsWebSocketRequest)
                     {
                         WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
-                        await new WebSocketHandler(webSocketContainer, webSocket, context.Request.Path).Invoke(context, initialData);
+                        await new WebSocketHandler(webSocketManager, webSocket, context.Request.Path).Invoke(context, initialData);
                     }
                     else
                         context.Response.StatusCode = 200;

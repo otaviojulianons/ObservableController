@@ -13,11 +13,11 @@ namespace ObservableController
 
         private RequestDelegate _next;
         private readonly TController _controller;
-        private WebSocketCollection _webSocketCollection;
+        private WebSockets.WebSocketManager _webSocketCollection;
         private List<string> _routesController;
         private string _channel;
 
-        public ObservableControllerMiddleware(RequestDelegate next, IActionDescriptorCollectionProvider routes, TController  controller, WebSocketCollection webSocketCollection)
+        public ObservableControllerMiddleware(RequestDelegate next, IActionDescriptorCollectionProvider routes, TController  controller, WebSockets.WebSocketManager webSocketCollection)
         {
             _next = next;
             _controller = controller;
@@ -27,7 +27,7 @@ namespace ObservableController
                 .Select(x => $"/{x.AttributeRouteInfo.Template}").ToList();
 
             _channel = _routesController.Where(r => r.Contains("GetData")).FirstOrDefault().Replace("GetData", "Subscribe");
-            webSocketCollection.RoutesInscription.Add(_channel, controller.GetType());
+            webSocketCollection.Channels.Add(_channel, controller.GetType());
 
         }
 
