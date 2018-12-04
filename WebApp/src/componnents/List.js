@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button,Table  } from 'antd';
 
+const URL_API = process.env.REACT_APP_API_URL;
 export default class List extends React.Component {
     
     constructor(props) {
@@ -10,7 +11,7 @@ export default class List extends React.Component {
     }
 
     componentDidMount(){
-        this.socket = new WebSocket(`ws://localhost:5000/${this.props.controller}/Subscribe`);  
+        this.socket = new WebSocket(`ws://${URL_API}/${this.props.controller}/Subscribe`);  
         this.socket.onopen = function (event) {  
             console.log('open',event);
         };  
@@ -29,7 +30,7 @@ export default class List extends React.Component {
     }
 
     onDelete(id){
-        fetch(`http://localhost:5000/${this.props.controller}/Delete?id=${id}`,{
+        fetch(`http://${URL_API}/${this.props.controller}/Delete?id=${id}`,{
             method: "DELETE",
         })
     }

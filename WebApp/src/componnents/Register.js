@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Button } from 'antd';
 
+const URL_API = process.env.REACT_APP_API_URL;
 export default class Register extends React.Component {
 
     constructor(){
@@ -10,7 +11,7 @@ export default class Register extends React.Component {
     }
 
     onAdd(){
-        fetch(`http://localhost:5000/${this.props.controller}/Add?name=${this.state.Name}`,{
+        fetch(`http://${URL_API}/${this.props.controller}/Add?name=${this.state.Name}`,{
             method: "POST",
         }).then( function() {
             this.setState({ Name: ''});
