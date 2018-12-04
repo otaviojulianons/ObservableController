@@ -1,12 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.0\Api.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netcoreapp2.1\Api.xml</DocumentationFile>
   </PropertyGroup>
+  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DocumentationFile>bin\Release\netcoreapp2.1\Api.xml</DocumentationFile>
+  </PropertyGroup>  
+  
+  <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
+    <ItemGroup>
+      <DocFile Include="bin\$(Configuration)\$(TargetFramework)\*.xml" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DocFile)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
+  </Target>
+
+  <ItemGroup>
+    <None Remove=".dockerignore" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\Sample\" />

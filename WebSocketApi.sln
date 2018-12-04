@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{5F9A18D6-23E0-4C44-B85C-1DC1E6FD2651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObservableController", "ObservableController\ObservableController.csproj", "{54F19118-71E1-4463-8384-660FF5CB2478}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ObservableController", "ObservableController\ObservableController.csproj", "{54F19118-71E1-4463-8384-660FF5CB2478}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
