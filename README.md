@@ -56,7 +56,17 @@ socket.onmessage = function (event) {
     console.log('message',JSON.parse(event.data));
 } 
 ```
+## Sample
 
-## Reference
+http://observable-controller.herokuapp.com/Sample/index.html
 
-https://radu-matei.com/blog/aspnet-core-websockets-middleware/
+## Installing ObservableController
+
+You should install [ObservableController with NuGet](https://www.nuget.org/packages/ObservableController):
+```
+    Install-Package ObservableController 
+```
+Or via the .NET Core command line interface:
+```
+    dotnet add package ObservableController 
+```
