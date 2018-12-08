@@ -15,5 +15,5 @@ WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "Api.dll"]
 
-# docker build -t api .
-# docker run -d -p 8080:80 --name myapi api
+# docker build -t observableapi .
+# docker run -d -p 8081:80 --name observableapi-local observableapi
